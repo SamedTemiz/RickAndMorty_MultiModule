@@ -1,5 +1,8 @@
-package com.timrashard.network
+package com.timrashard.network.model
 
+import com.timrashard.network.model.domain.Character
+import com.timrashard.network.model.remote.RemoteCharacter
+import com.timrashard.network.model.remote.toDomainCharacter
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -31,18 +34,8 @@ class KtorClient {
     }
 
     suspend fun getCharacter(id: Int) : Character {
-        return client.get("character/$id").body()
+        return client.get("character/$id")
+            .body<RemoteCharacter>()
+            .toDomainCharacter()
     }
-}
-
-@Serializable
-data class Character(
-    val id: Int,
-    val name: String,
-    val origin: Origin
-){
-    @Serializable
-    data class Origin(
-        val name: String
-    )
 }

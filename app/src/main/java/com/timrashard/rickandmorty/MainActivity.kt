@@ -16,8 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.timrashard.network.Character
-import com.timrashard.network.KtorClient
+import com.timrashard.network.model.KtorClient
+import com.timrashard.network.model.domain.Character
 import com.timrashard.rickandmorty.ui.theme.RickAndMortyTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
             }
 
             LaunchedEffect(key1 = Unit) {
-                character = ktorClient.getCharacter(1)
+                character = ktorClient.getCharacter(55)
             }
 
             RickAndMortyTheme {
