@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,7 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.timrashard.network.model.KtorClient
 import com.timrashard.network.model.domain.Character
+import com.timrashard.rickandmorty.screens.CharacterDetailsScreen
 import com.timrashard.rickandmorty.ui.theme.RickAndMortyTheme
+import com.timrashard.rickandmorty.ui.theme.RickPrimary
 
 class MainActivity : ComponentActivity() {
 
@@ -27,22 +30,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var character by remember {
-                mutableStateOf<Character?>(null)
-            }
-
-            LaunchedEffect(key1 = Unit) {
-                character = ktorClient.getCharacter(55)
-            }
-
             RickAndMortyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)) {
-                        Text(text = "Character: ${character?.name ?: "No character"}")
-                    }
+                Surface(
+                    color = RickPrimary,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CharacterDetailsScreen(
+                        ktorClient = ktorClient,
+                        characterId = 31
+                    )
                 }
             }
         }
